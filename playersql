@@ -1,0 +1,61 @@
+drop database hsplayerdb;
+
+CREATE database hsplayerdb;
+
+USE hsplayerdb;
+
+drop table player;
+CREATE TABLE IF NOT EXISTS player(
+    player_id int not null auto_increment primary key,
+    player_name varchar(30),
+    player_team varchar(30),
+    player_points int,
+    coach_id int,
+    school_id int,
+    FOREIGN KEY (coach_id) references coach(coach_id),
+    FOREIGN KEY (school_id) references school(school_id)
+
+
+);
+
+drop table school;
+CREATE TABLE IF NOT EXISTS coach(
+    coach_id int not null auto_increment primary key,
+    coach_name varchar(30)
+);
+
+CREATE TABLE IF NOT EXISTS school(
+    school_id int not null auto_increment primary key,
+    school_name varchar(30)
+);
+
+SELECT player.player_name,coach.coach_name,school.school_name
+FROM player
+INNER JOIN coach ON player.coach_id = coach.coach_id
+INNER JOIN school ON player.coach_id = school.school_id;
+
+
+
+
+
+INSERT INTO coach( coach_name) VALUES ('Bryson');
+INSERT INTO coach( coach_name) VALUES ('Mike');
+INSERT INTO coach( coach_name) VALUES ('Aj');
+INSERT INTO coach( coach_name) VALUES ('Jackson');
+INSERT INTO coach( coach_name) VALUES ('Joe');
+
+SELECT * FROM coach;
+SELECT * FROM school;
+SELECT * FROM player;
+
+INSERT INTO school(school_name) VALUES('UPrep');
+INSERT INTO school(school_name) VALUES('Bellevue');
+INSERT INTO school(school_name) VALUES('Interlake');
+INSERT INTO school(school_name) VALUES('Lakeside');
+INSERT INTO school(school_name) VALUES('Overlake');
+
+INSERT INTO player(player_name,player_team,player_points,coach_id,school_id) VALUES ('Ishaan','varsity',34,1,1);
+
+
+
+
