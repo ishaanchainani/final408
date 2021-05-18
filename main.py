@@ -47,11 +47,16 @@ class playersdb:
         rows = self.cursor.fetchall()
         return rows
 
+    def report6(self):
+        self.cursor.execute("SELECT player.player_name,coach.coach_name,school.school_name FROM player INNER JOIN coach ON player.coach_id = coach.coach_id INNER JOIN school ON player.coach_id = school.school_id")
+        rows = self.cursor.fetchall()
+        return rows
+
 
     def insert(self, player_name, player_team, player_points):
         sql=("INSERT INTO player (player_name,player_team,player_points) VALUES (%s,%s,%s)")
         values =[player_name, player_team, player_points]
-        self.cursor.execute(sql,values)
+        self.cursor.execute(sql, values)
         self.con.commit()
         messagebox.showinfo(title="Player Database",message="New player added to database")
 
@@ -103,6 +108,11 @@ def report4_records():
 def report5_records():
     list_bx.delete(0, 'end')
     for row in db.report5():
+        list_bx.insert('end', row)
+
+def report6_records():
+    list_bx.delete(0, 'end')
+    for row in db.report6():
         list_bx.insert('end', row)
 
 
@@ -212,6 +222,9 @@ report4_btn.grid(row=16, column=1)#, sticky=tk.N)
 
 report5_btn = Button(root, text="Leading Scorer", bg="black",fg="black",font="helvetica 10 bold",command=report5_records)
 report5_btn.grid(row=16, column=1)#, sticky=tk.N)
+
+report6_btn = Button(root, text="School/Coach", bg="black",fg="black",font="helvetica 10 bold",command=report6_records)
+report6_btn.grid(row=16, column=1)#, sticky=tk.N)
 
 
 
